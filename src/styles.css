@@ -1,0 +1,256 @@
+:root {
+  --bg: #070b13;
+  --ink: #e8edf5;
+  --muted: #8b9bb4;
+  --accent: #53e6d0;
+  --card: rgba(10, 16, 28, 0.72);
+  --line: rgba(83, 230, 208, 0.25);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .stat-num { font-family: 'Sora', 'Inter', sans-serif; }
+
+/* Fixed 3D stage behind everything */
+.stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+main { position: relative; z-index: 1; }
+
+/* ——— Panels & cards ——— */
+.panel {
+  min-height: 130vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12vh 24px;
+}
+.panel.tall { min-height: 160vh; }
+.panel.hero { min-height: 100vh; text-align: center; }
+
+.card {
+  max-width: 620px;
+  background: var(--card);
+  border: 1px solid rgba(139, 155, 180, 0.14);
+  border-radius: 16px;
+  padding: 44px 48px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+.card.wide { max-width: 780px; }
+
+/* ——— Reveal on scroll ——— */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ——— Type ——— */
+.kicker {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: clamp(44px, 8vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-shadow: 0 0 60px rgba(83, 230, 208, 0.25);
+}
+
+h2 {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+h2.closing { font-size: clamp(32px, 5.5vw, 56px); margin-bottom: 14px; }
+
+.role {
+  margin-top: 16px;
+  font-size: clamp(15px, 2.2vw, 19px);
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+
+.tagline {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: clamp(14px, 2vw, 17px);
+  font-style: italic;
+}
+
+.body { color: var(--muted); font-size: 15.5px; }
+.body strong { color: var(--ink); font-weight: 600; }
+.body.center { text-align: center; }
+
+.entry { margin-top: 26px; }
+.entry h3 { font-size: 17px; font-weight: 600; color: var(--ink); }
+.dates { color: var(--accent); font-size: 12.5px; letter-spacing: 0.06em; margin: 4px 0 8px; }
+
+.bullets { margin-top: 22px; padding-left: 18px; display: grid; gap: 10px; }
+.bullets li::marker { color: var(--accent); }
+
+/* ——— Scroll hint ——— */
+.scroll-hint {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: drop 2.2s ease-in-out infinite;
+}
+@keyframes drop {
+  0% { transform: scaleY(0); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: top; }
+  56% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ——— Stats ——— */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+  margin: 30px 0 6px;
+}
+.stat {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 16px;
+  text-align: center;
+  background: rgba(83, 230, 208, 0.04);
+}
+.stat-num {
+  display: block;
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(83, 230, 208, 0.4);
+}
+.stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+
+/* ——— Milestones ——— */
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 6px 28px;
+  margin-top: 8px;
+}
+.milestone {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(139, 155, 180, 0.1);
+}
+.dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(83, 230, 208, 0.8);
+}
+.m-name { font-size: 14.5px; font-weight: 600; }
+.m-org { font-size: 12.5px; color: var(--muted); }
+
+.toolkit {
+  margin-top: 30px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 2;
+}
+.toolkit span {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+  margin-right: 12px;
+}
+
+/* ——— Contact ——— */
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 36px;
+}
+.btn {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  background: rgba(10, 16, 28, 0.6);
+}
+.btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 24px rgba(83, 230, 208, 0.25);
+  transform: translateY(-2px);
+}
+.btn.primary {
+  background: var(--accent);
+  color: #04211c;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.fineprint { margin-top: 56px; color: rgba(139, 155, 180, 0.5); font-size: 12px; }
+
+/* On wide screens, let the 3D scene share the frame with the story cards. */
+@media (min-width: 1024px) {
+  .panel.left { justify-content: flex-start; padding-left: 8vw; }
+  .panel.right { justify-content: flex-end; padding-right: 8vw; }
+}
+
+/* ——— Small screens & motion preferences ——— */
+@media (max-width: 640px) {
+  .card { padding: 30px 24px; }
+  .panel { padding: 10vh 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+  .scroll-line { animation: none; }
+}
