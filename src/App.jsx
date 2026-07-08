@@ -5,7 +5,7 @@ const LINKS = {
   email: 'mailto:ritika2501ra@gmail.com',
   phone: 'tel:+918449113322',
   linkedin: 'https://www.linkedin.com/in/ritika-jain', // TODO: replace with exact profile URL
-  resume: '/Ritika_Jain_CV.docx',
+  resume: '/Ritika_Jain_CV.pdf',
 };
 
 function Canvas() {
