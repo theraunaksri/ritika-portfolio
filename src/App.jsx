@@ -1,12 +1,63 @@
 import { useEffect, useRef, useState } from 'react';
 import { createExperience } from './scene/Experience.js';
 
+const EMAIL = 'ritika2501ra@gmail.com';
+
 const LINKS = {
-  email: 'mailto:ritika2501ra@gmail.com',
+  email: `mailto:${EMAIL}`,
   phone: 'tel:+918449113322',
   linkedin: 'https://www.linkedin.com/in/ritika-jain', // TODO: replace with exact profile URL
   resume: '/Ritika_Jain_CV.pdf',
 };
+
+// Copies text using the async Clipboard API, falling back to the legacy
+// execCommand path when it's unavailable or blocked. Resolves true on success.
+async function copyText(text) {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    /* fall through to legacy path */
+  }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+// Opens the mail client where one is configured; always copies the address to the
+// clipboard so the visitor never leaves empty-handed (e.g. desktops with no mail app).
+function EmailButton() {
+  const [label, setLabel] = useState('Email');
+  const timer = useRef(null);
+
+  const handleClick = async () => {
+    // Let the default mailto navigation proceed for anyone with a mail client.
+    const ok = await copyText(EMAIL);
+    setLabel(ok ? 'Copied!' : EMAIL);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setLabel('Email'), 2200);
+  };
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  return (
+    <a className="btn primary" href={LINKS.email} onClick={handleClick}>
+      {label}
+    </a>
+  );
+}
 
 function Canvas() {
   const ref = useRef(null);
@@ -203,7 +254,7 @@ export default function App() {
               Delhi NCR, India — open to consulting, business analysis, and product roles.
             </p>
             <div className="contact-row">
-              <a className="btn primary" href={LINKS.email}>Email</a>
+              <EmailButton />
               <a className="btn" href={LINKS.phone}>Call Me</a>
               <a className="btn" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
               <a className="btn" href={LINKS.resume} download>Download resume</a>
