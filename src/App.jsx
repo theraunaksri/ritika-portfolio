@@ -203,8 +203,8 @@ export default function App() {
               Delhi NCR, India — open to consulting, business analysis, and product roles.
             </p>
             <div className="contact-row">
-              <a className="btn primary" href={LINKS.email}>ritika2501ra@gmail.com</a>
-              <a className="btn" href={LINKS.phone}>+91 84491 13322</a>
+              <a className="btn primary" href={LINKS.email}>Email</a>
+              <a className="btn" href={LINKS.phone}>Call Me</a>
               <a className="btn" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
               <a className="btn" href={LINKS.resume} download>Download resume</a>
             </div>
